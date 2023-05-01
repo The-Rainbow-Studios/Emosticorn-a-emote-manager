@@ -1,6 +1,6 @@
 # DON'T BE A DICK PUBLIC LICENSE
 
-> Version 1.2, February 2021
+> Version 1.2, April 2023
 
 > Copyright (C) 2023 Tejas Lamba
 
@@ -20,6 +20,6 @@
     creator(s) a pint.
 
 3.  Code is provided with no warranty. Using somebody else's code and bitching when it goes wrong makes
-    you a DONKEY dick. Fix the problem yourself. A non-dick would submit the fix back or submit a [bug report](https://github.com/The-Rainbow-Studios/discord.js-v14-handler/issues).
+    you a DONKEY dick. Fix the problem yourself. A non-dick would submit the fix back or submit a [bug report](https://github.com/The-Rainbow-Studios/Emosticorn-a-emote-manager/issues).
 
 4.  If you use code, calling it your own would make you a ROYAL dick. Alternatively, even just a comment giving attribution to where you found the code would be OK.
