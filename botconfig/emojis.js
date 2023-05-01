@@ -1,7 +1,7 @@
 const { formatEmoji } = require("discord.js");
 module.exports = {
-  x: formatEmoji("780403017160982538", false),
-  check_mark: "<:approved:780401773532807208>",
-  loading: "<a:Loading:833101350623117342>",
-  ping: "<a:Online_Ping:866085733534269440>",
+  x: formatEmoji("1093767448307699812", false),
+  check_mark: formatEmoji("1093767445325557861", false),
+  loading: formatEmoji("1056485217671593995", false),
+  ping: formatEmoji("1097753470049730610", false),
 };

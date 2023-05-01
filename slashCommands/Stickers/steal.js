@@ -6,6 +6,7 @@ const {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   PermissionFlagsBits,
+  formatEmoji
 } = require("discord.js");
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
@@ -72,20 +73,22 @@ module.exports = {
 
       if (!msg_data || !msg_data.messageId) {
         return interaction.reply({
+          ephemeral: true,
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | This is not a msg **url**`),
+              .setDescription(`${emote.x} | This is not a message URL`),
           ],
         });
       }
       const guild = client.guilds.cache.get(msg_data.guildId);
       if (!guild) {
         return interaction.reply({
+          ephemeral: true,
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | I dont have access to the guild`),
+              .setDescription(`${emote.x} | I don't have access to the guild`),
           ],
           components: [
             new ActionRowBuilder().addComponents(btn.support, btn.github),
@@ -95,10 +98,11 @@ module.exports = {
       const channel = guild.channels.cache.get(msg_data.channelId);
       if (!channel) {
         return interaction.reply({
+          ephemeral: true,
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | I dont have access to the channel`),
+              .setDescription(`${emote.x} | I don't have access to the channel`),
           ],
           components: [
             new ActionRowBuilder().addComponents(btn.support, btn.github),
@@ -108,19 +112,20 @@ module.exports = {
       const message = await channel.messages.fetch(msg_data.messageId);
       if (!message) {
         return interaction.reply({
+          ephemeral: true,
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
               .setDescription(
-                `${emote.x} | I dont have access to this message`
-              ),
+                `${emote.x} | I don't have access to the message`),
           ],
           components: [
             new ActionRowBuilder().addComponents(btn.support, btn.github),
           ],
         });
       }
-      const sticker = message.stickers.map((sticker) => {
+      const sticker = await Promise.all(message.stickers.map(async (sticker) => {
+        await sticker.fetch()
         return {
           id: sticker.id,
           name: sticker.name,
@@ -128,11 +133,21 @@ module.exports = {
           tags: sticker.tags,
           guildId: sticker.guildId,
         };
-      });
+      }));
       if (!sticker[0].guildId) {
         interaction.reply({
-          content: `no default stickers use nitro boi`,
+          ephemeral: true,
+          embeds: [
+            new EmbedBuilder()
+              .setColor(ee.color)
+              .setDescription(
+                `${emote.x} | You cannot steal a default sticker, purchase nitro by clicking [here](https://discord.com/nitro)`),
+          ],
+          components: [
+            new ActionRowBuilder().addComponents(btn.support, btn.github),
+          ],
         });
+        return;
       }
       let emo = client.stickers.get(sticker[0].id);
       if (!emo?.name || !emo?.id) {
@@ -140,10 +155,14 @@ module.exports = {
       }
       if (!emo?.name || !emo?.id)
         return interaction.reply({
+          ephemeral: true,
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | No sticker in that message`),
+              .setDescription(`${emote.x} | No sticker was found in that message`),
+          ],
+          components: [
+            new ActionRowBuilder().addComponents(btn.support, btn.github),
           ],
         });
       const buttons = new ButtonBuilder()
@@ -151,14 +170,19 @@ module.exports = {
         .setLabel("Steal")
         .setStyle(ButtonStyle.Primary)
         .setEmoji("1056484133372702800");
-
+       
       const msg = await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setColor(ee.color)
             .setDescription(
-              `Stickers enlarged ${emo.name}
-                      [sticker link](https://cdn.discordapp.com/stickers/${emo.id}.png)`
+              `${formatEmoji('1102541481845215248', false)} Sticker name: \`${emo.name}\` 
+              ${formatEmoji('1102533953874833529', false)} Sticker Image Link: [Click here](https://cdn.discordapp.com/stickers/${emo.id}.png) 
+              ${formatEmoji('1102541952114765941', false)} Sticker Description: \`${emo.description || "No Description"}\` 
+              ${formatEmoji('1102541952114765941', false)} Sticker Tags: \`${emo.tags || "No Tags"}\` 
+              ${formatEmoji('1102541952114765941', false)} Sticker ID: \`${emo.id}\` 
+              ${formatEmoji('1102541952114765941', false)} Sticker Guild ID: \`${emo.guildId}\` 
+              ${formatEmoji('1102541952114765941', false)} Sticker Preview:`
             )
             .setImage(`https://cdn.discordapp.com/stickers/${emo.id}.png`),
         ],
@@ -234,12 +258,12 @@ module.exports = {
         ).filter((option) => option !== undefined);
         const guild_choose_msg = await r.reply({
           ephemeral: true,
-          content: `Select guild you want to add this sticker`,
+          content: `Choose the server you want to add this sticker to`,
           components: [
             new ActionRowBuilder().addComponents(
               new StringSelectMenuBuilder()
                 .setCustomId("guilds_select")
-                .setPlaceholder("Choose the guild you want to add this")
+                .setPlaceholder("Click me to select a server")
                 .setMinValues(1)
                 .setMaxValues(1)
                 .addOptions(options)
@@ -268,7 +292,7 @@ module.exports = {
             embeds: [
               new EmbedBuilder()
                 .setColor(ee.color)
-                .setDescription(`${emote.x} | Command timed out.`),
+                .setDescription(`${emote.x} | You ran out of time! Run the command again to steal the sticker!`),
             ],
             components: [
               new ActionRowBuilder().addComponents(btn.support, btn.github),
@@ -290,7 +314,7 @@ module.exports = {
                 embeds: [
                   new EmbedBuilder()
                     .setColor(ee.color)
-                    .setDescription(`${emote.tick} | ${st.name} + " added!`)
+                    .setDescription(`${emote.tick} | ${st.name} + " was added!`)
                     .setImage(
                       `https://cdn.discordapp.com/stickers/${emo.id}.png`
                     ),
@@ -307,7 +331,7 @@ module.exports = {
                     new EmbedBuilder()
                       .setColor(ee.color)
                       .setDescription(
-                        `${emote.x} | **Max Stickers slots reached.**`
+                        `${emote.x} | Maximum number of stickers reached!`
                       ),
                   ],
                   components: [
@@ -324,7 +348,7 @@ module.exports = {
                   new EmbedBuilder()
                     .setColor(ee.color)
                     .setDescription(
-                      `${emote.x} | an Error occured, Error code: ${error.code}`
+                      `${emote.x} | an Error occured while adding stickers. Error Code: ${error.code}`
                     ),
                 ],
                 components: [

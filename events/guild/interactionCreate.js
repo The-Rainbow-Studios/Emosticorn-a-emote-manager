@@ -10,19 +10,21 @@ module.exports = async (client, interaction) => {
       if (interaction.commandName === "stickers") {
         if (interaction.options.getSubcommand() === "enlarge") {
           const focusedOption = interaction.options.getString("sticker");
-          const sticker_list = client.stickers.map((sticker) => sticker.name);
+          const sticker_list = client.stickers.map((sticker) => ({ name: sticker.name, id: sticker.id }));
+
+          
           const filtered = sticker_list.filter((sticker) =>
-            sticker.startsWith(focusedOption)
+            sticker.name.startsWith(focusedOption)
           );
           const sliced = filtered.slice(0, 25);
           await interaction.respond(
             sliced.map((sticker) => ({
               name: client.guilds.cache
                 .get(interaction.member.guild.id)
-                .stickers.cache.find((st) => st.name === sticker)
-                ? `Current Server - ${sticker}`
-                : `Mutual Server - ${sticker}`,
-              value: client.stickers.find((st) => st.name === sticker).id,
+                .stickers.cache.find((st) => st.id === sticker.id)
+                ? `Current Server - ${sticker.name}`
+                : `Mutual Server - ${sticker.name}`,
+              value: client.stickers.find((st) => st.id === sticker.id).id,
             }))
           );
         }
@@ -31,38 +33,38 @@ module.exports = async (client, interaction) => {
       if (interaction.commandName === "emotes") {
         if (interaction.options.getSubcommand() === "enlarge") {
           const focusedOption = interaction.options.getString("emoji");
-          const emoji_list = client.emojis.cache.map((emoji) => emoji.name);
+          const emoji_list = client.emojis.cache.map((emoji) => ({ name: emoji.name, id: emoji.id }));
           const filtered = emoji_list.filter((emoji) =>
-            emoji.startsWith(focusedOption)
+            emoji.name.startsWith(focusedOption)
           );
           const sliced = filtered.slice(0, 25);
           await interaction.respond(
             sliced.map((emoji) => ({
               name: client.guilds.cache
                 .get(interaction.member.guild.id)
-                .emojis.cache.find((e) => e.name === emoji)
-                ? `Current Server - ${emoji}`
-                : `Mutual Server - ${emoji}`,
-              value: client.emojis.cache.find((e) => e.name === emoji).id,
+                .emojis.cache.find((e) => e.id === emoji.id)
+                ? `Current Server - ${emoji.name}`
+                : `Mutual Server - ${emoji.name}`,
+              value: client.emojis.cache.find((e) => e.id === emoji.id).id,
             }))
           );
         }
 
         if (interaction.options.getSubcommand() === "add") {
           const focusedOption = interaction.options.getString("emoji");
-          const emoji_list = client.emojis.cache.map((emoji) => emoji.name);
+          const emoji_list = client.emojis.cache.map((emoji) => ({ name: emoji.name, id: emoji.id }));
           const filtered = emoji_list.filter((emoji) =>
-            emoji.startsWith(focusedOption)
+            emoji.name.startsWith(focusedOption)
           );
           const sliced = filtered.slice(0, 25);
           await interaction.respond(
             sliced.map((emoji) => ({
               name: client.guilds.cache
                 .get(interaction.member.guild.id)
-                .emojis.cache.find((e) => e.name === emoji)
-                ? `Current Server - ${emoji}`
-                : `Mutual Server - ${emoji}`,
-              value: client.emojis.cache.find((e) => e.name === emoji).id,
+                .emojis.cache.find((e) => e.id === emoji.id)
+                ? `Current Server - ${emoji.name}`
+                : `Mutual Server - ${emoji.name}`,
+              value: client.emojis.cache.find((e) => e.id === emoji.id).id,
             }))
           );
         }

@@ -5,6 +5,7 @@ var ee = require("../../botconfig/embed.js");
 const settings = require("../../botconfig/settings.js");
 let cpuStat = require("cpu-stat");
 let os = require("os");
+const btn = require("../../botconfig/components.js");
 module.exports = {
   name: "botinfo", //the command name for execution & for helpcmd [OPTIONAL]
   category: "Utilites",
@@ -41,8 +42,8 @@ module.exports = {
                 value: `\`${(
                   process.memoryUsage().heapUsed /
                   1024 /
-                  1024
-                ).toFixed(2)}/ ${(os.totalmem() / 1024 / 1024).toFixed(2)}MB\``,
+                  1024 / 1024
+                ).toFixed(2)}/ ${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)}GB\``,
                 inline: true,
               },
               {
@@ -142,6 +143,7 @@ module.exports = {
             });
           interaction.reply({
             embeds: [botinfo],
+            components: [new Discord.ActionRowBuilder().addComponents(btn.invite, btn.support, btn.github)],
           });
         } catch (e) {
           console.log(e);

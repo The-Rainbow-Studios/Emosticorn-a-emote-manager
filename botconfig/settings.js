@@ -9,17 +9,17 @@ module.exports = {
   messages: {
     ping_message: "To see all Commands type: `%{prefix}%help`",
     cooldown:
-      "❌ Please wait %{timeleft}% more Second(s) before reusing the `%{commandname}%` command.",
+      "❌ You need to wait: **`%{timeleft}%`** before you can use the: `%{commandname}%` command again!",
     notallowed_to_exec_cmd: {
-      title: "❌ You are not allowed to run this command!",
+      title: "❌ You are not allowed to execute the: `%{commandname}%` command",
       description: {
         memberpermissions:
-          "You need these Permissions:\n> %{commandmemberpermissions}%",
+          "You need to have one of the Following Permissions:\n> %{commandmemberpermissions}%",
         alloweduserids:
           "You need to be one of the Following Users:\n> %{commandalloweduserids}%",
         requiredroles:
           "You need to have one of the Following Roles:\n> %{commandrequiredroles}%",
-        default: "Please make sure, to get the needed Permissions!",
+        default: "You are not allowed to execute this command",
       },
     },
     somethingwentwrong_cmd: {
@@ -27,7 +27,7 @@ module.exports = {
         "❌ Something went wrong while, running the: `%{commandname}%` command",
       description: "```%{errormessage}%```",
     },
-    unknown_cmd: "❌ Unkown command, try: **`%{prefix}%help`**",
+    unknown_cmd: "❌ Unkown command, try: **`%{prefix}%general help`**",
     error_occur: "❌ An error occurred",
     error_occur_desc: "````%{errorstack}%````",
   },

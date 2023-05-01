@@ -8,22 +8,22 @@ module.exports = {
     {
       Folder: "Utilites",
       CmdName: "Utilites",
-      CmdDescription: "Get bots other info's",
+      CmdDescription: "Utilites commands",
     },
     {
       Folder: "General",
       CmdName: "General",
-      CmdDescription: "Some commands that give bot's info",
+      CmdDescription: "General commands",
     },
     {
       Folder: "Emotes",
       CmdName: "Emotes",
-      CmdDescription: "Emoji modification commands",
+      CmdDescription: "Emote modification commands",
     },
     {
       Folder: "Stickers",
       CmdName: "Stickers",
-      CmdDescription: "Stcikers modification commands",
+      CmdDescription: "Sticker modification commands",
     },
   ],
 };

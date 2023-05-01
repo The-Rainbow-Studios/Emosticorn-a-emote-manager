@@ -1,7 +1,8 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder } = require("discord.js");
 const config = require("../../botconfig/config.js");
 var ee = require("../../botconfig/embed.js");
 const settings = require("../../botconfig/settings.js");
+const btn = require("../../botconfig/components.js");
 module.exports = {
   name: "invite", //the command name for execution & for helpcmd [OPTIONAL]
   category: "General",
@@ -34,9 +35,10 @@ module.exports = {
             .setColor(ee.color)
             .setFooter({ text: ee.footertext, iconURL: ee.footericon })
             .setDescription(
-              `[**Click here to invite me!**](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot%20applications.commands)\n\n||[**Click here to invite me __without__ Slash Commands!**](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot)||`
+              `[**Click here to invite me!**](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=9209484003393&scope=applications.commands%20bot)||`
             ),
         ],
+        components: [new ActionRowBuilder().addComponents([btn.invite, btn.support, btn.github])],
       });
     } catch (e) {
       console.log(String(e.stack).bgRed);

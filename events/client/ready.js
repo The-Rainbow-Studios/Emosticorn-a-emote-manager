@@ -1,7 +1,7 @@
 //here the event starts
 const config = require("../../botconfig/config.js");
 
-module.exports = (client) => {
+module.exports = async (client) => {
   try {
     try {
       const stringlength = 69;
@@ -84,8 +84,9 @@ module.exports = (client) => {
       .catch(console.error);
 
     for (const [, guild] of client.guilds.cache) {
-      guild.stickers.cache.forEach((sticker) =>
-        client.stickers.set(sticker.id, sticker)
+      guild.stickers.cache.forEach(async (sticker) =>{
+        
+        client.stickers.set(sticker.id, sticker)}
       );
     }
   } catch (e) {

@@ -4,6 +4,7 @@ const {
   ButtonBuilder,
   ActionRowBuilder,
   ButtonStyle,
+  formatEmoji
 } = require("discord.js");
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
@@ -45,7 +46,7 @@ module.exports = {
       client.stickers.forEach((x) => stickers.push(x));
       if (stickers.size === 0)
         return interaction.reply({
-          content: "There are no stickers in the cache",
+          content: "There are no stickers in this server!",
         });
       let data;
       stickers = stickers.map((s, i) => {
@@ -54,9 +55,10 @@ module.exports = {
             number: i + 1,
             id: s.id,
             description:
-              s.description !== "" ? s.description : `No description`,
+              s.description !== "" ? s.description : `No Description`,
             name: s.name,
             guild: s.guild.name,
+            tags: s.tags
           };
           list.push(data);
         }
@@ -91,12 +93,17 @@ module.exports = {
       }
       // refreshButtons();
       let e = new EmbedBuilder()
-        .setDescription(list[page].description)
-        .setTitle(list[page].name)
+        .setDescription(`${formatEmoji('1102541481845215248', false)} Sticker name: \`${list[page].name}\`
+        ${formatEmoji('1102533953874833529', false)} Sticker Image Link: [Click here](https://cdn.discordapp.com/stickers/${list[page].id}.png)
+        ${formatEmoji('1102541952114765941', false)} Sticker ID: \`${list[page].id}\`
+        ${formatEmoji('1102541952114765941', false)} Sticker description: \`${list[page].description}\`
+        ${formatEmoji('1102541952114765941', false)} Sticker guild: \`${list[page].guild}\`
+        ${formatEmoji('1102541952114765941', false)} Sticker tags: \`${list[page].tags}\`
+        ${formatEmoji('1102541952114765941', false)} Sticker Preview:`)
         .setImage(`https://cdn.discordapp.com/stickers/${list[page].id}.png`)
         .setFooter({
           text: `Page ${page + 1} of ${list.length} (${
-            stickers.length
+            list.length
           } entries)`,
           iconURL: ee.footericon,
         })
@@ -139,14 +146,20 @@ module.exports = {
           page++;
           r.deferUpdate();
           let newEmbed = new EmbedBuilder()
-            .setDescription(list[page].description)
-            .setTitle(list[page].name)
+            .setDescription(`${formatEmoji('1102541481845215248', false)} Sticker name: \`${list[page].name}\`
+            ${formatEmoji('1102533953874833529', false)} Sticker Image Link: [Click here](https://cdn.discordapp.com/stickers/${list[page].id}.png)
+            ${formatEmoji('1102541952114765941', false)} Sticker ID: \`${list[page].id}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker description: \`${list[page].description}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker guild: \`${list[page].guild}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker tags: \`${list[page].tags}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker Preview:`)
+            .setImage(`https://cdn.discordapp.com/stickers/${list[page].id}.png`)
             .setImage(
               `https://cdn.discordapp.com/stickers/${list[page].id}.png`
             )
             .setFooter({
               text: `Page ${page + 1} of ${list.length} (${
-                stickers.length
+                list.length
               } entries)`,
               iconURL: ee.footericon,
             })
@@ -158,14 +171,20 @@ module.exports = {
           r.deferUpdate() && refreshButtons();
 
           let newEmbed = new EmbedBuilder()
-            .setDescription(list[page].description)
-            .setTitle(list[page].name)
+            .setDescription(`${formatEmoji('1102541481845215248', false)} Sticker name: \`${list[page].name}\`
+            ${formatEmoji('1102533953874833529', false)} Sticker Image Link: [Click here](https://cdn.discordapp.com/stickers/${list[page].id}.png)
+            ${formatEmoji('1102541952114765941', false)} Sticker ID: \`${list[page].id}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker description: \`${list[page].description}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker guild: \`${list[page].guild}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker tags: \`${list[page].tags}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker Preview:`)
+            .setImage(`https://cdn.discordapp.com/stickers/${list[page].id}.png`)
             .setImage(
               `https://cdn.discordapp.com/stickers/${list[page].id}.png`
             )
             .setFooter({
               text: `Page ${page + 1} of ${list.length} (${
-                stickers.length
+                list.length
               } entries)`,
               iconURL: ee.footericon,
             })

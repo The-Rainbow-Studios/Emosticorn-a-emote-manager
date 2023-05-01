@@ -9,6 +9,7 @@ const {
   Collection,
   formatEmoji,
 } = require("discord.js");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
 const settings = require("../../botconfig/settings.js");
@@ -135,20 +136,39 @@ module.exports = {
           emoteIds.push(id);
         }
       }
-
+      
+      if(emoteIds.length === 0) {
+        return interaction.reply({
+          embeds: [
+            new EmbedBuilder()
+              .setColor(ee.color)
+              .setDescription(
+                `${emote.x} | There is no emoji in this message or it is an emote I don't have acess to`
+              ),
+          ],
+          components: [
+            new ActionRowBuilder().addComponents(btn.support, btn.github),
+          ],
+        });
+      }
       let index = 0;
       emoteIds.forEach((id) => {
-        emojis.set(index, client.emojis.cache.get(id));
+        emojis.set(index, client.emojis.cache.get(id) ? client.emojis.cache.get(id) : id);
         index++;
       });
-
-      emojis = emojis.map(
-        (e, i) =>
-          `${i + 1}. ${formatEmoji(e.id, e.animated)} \`${formatEmoji(
-            e.id,
-            e.animated
-          )}\``
+      emojis = await Promise.all(
+        emojis.map(async (e, i) => {
+          let emojiMsg;
+          
+          if (e.id) {
+            emojiMsg = `${formatEmoji(e.id, e.animated)} - \`${formatEmoji(e.id, e.animated)}\``;
+          } else {
+            emojiMsg = `I do not have access to the emote [click here](${await getEmojiURL(e)}) to get a png link to it`;
+          }
+          return `${i + 1}. ${emojiMsg}`;
+        })
       );
+
       for (var i = 0; i < emojis.length; i += 10) {
         const items = emojis.slice(i, i + 10);
         list.push(items.join("\n"));
@@ -386,4 +406,11 @@ function trimString(str, len) {
     str = str.substring(0, len - 3) + "...";
   }
   return str;
+}
+
+async function getEmojiURL(id) {
+  const baseURL = "https://cdn.discordapp.com/emojis/";
+  const response = await fetch(`${baseURL}${id}.png`);
+  const extension = response.ok ? "png" : "gif";
+  return `${baseURL}${id}.${extension}`;
 }

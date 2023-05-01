@@ -6,6 +6,7 @@ const {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   PermissionFlagsBits,
+  formatEmoji,
 } = require("discord.js");
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
@@ -74,7 +75,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | Invalid emote argument`),
+              .setDescription(`${emote.x} | Invalid emoji provided!`),
           ],
         });
 
@@ -83,16 +84,20 @@ module.exports = {
         .setLabel("Steal")
         .setStyle(ButtonStyle.Primary)
         .setEmoji("1056484133372702800");
-
       const msg = await interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setColor(ee.color)
             .setDescription(
-              `Emojis enlarged ${emo.name}
-                      [emoji link](https://cdn.discordapp.com/emojis/${
-                        emo.id
-                      }.${emo.animated ? "gif" : "png"})`
+              `${formatEmoji('1102541481845215248', false)} Emoji name: \`${emo.name}\`
+              ${formatEmoji('1102533953874833529', false)} Emoji Image Link: [Click here](https://cdn.discordapp.com/emojis/${emo.id}.${
+                emo.animated ? "gif" : "png"
+              })
+              ${formatEmoji('1102541952114765941', false)} Emoji ID: \`${emo.id}\`
+              ${formatEmoji('1102541952114765941', false)} Emoji guild: \`${emo.guild.name}\`
+              ${formatEmoji('1102541952114765941', false)} Emoji animated: \`${emo.animated}\`
+              ${formatEmoji('1102541952114765941', false)} Emoji identifier: \`<${emo.identifier}>\`
+              ${formatEmoji('1102541952114765941', false)} Emoji Preview:`
             )
             .setImage(
               `https://cdn.discordapp.com/emojis/${emo.id}.${
@@ -125,11 +130,9 @@ module.exports = {
         });
       } catch (error) {
         return msg.edit({
-          embeds: [
-            new EmbedBuilder()
-              .setColor(ee.color)
-              .setDescription(`${emote.x} | Command timed out.`),
-          ],
+          content: 
+            `${emote.x} | You ran out of time! Try again!`,
+          
           components: [
             new ActionRowBuilder().addComponents(
               btn.support,
@@ -170,12 +173,12 @@ module.exports = {
 
         const guild_choose_msg = await r.reply({
           ephemeral: true,
-          content: `Select guild you want to add this emoji`,
+          content: `${emote.loading} | Please choose a guild to add this emoji to!`,
           components: [
             new ActionRowBuilder().addComponents(
               new StringSelectMenuBuilder()
                 .setCustomId("guilds_select")
-                .setPlaceholder("Choose the guild you want to add this")
+                .setPlaceholder("Select a guild to add the emoji to!")
                 .setMinValues(1)
                 .setMaxValues(1)
                 .addOptions(options)
@@ -203,7 +206,7 @@ module.exports = {
             embeds: [
               new EmbedBuilder()
                 .setColor(ee.color)
-                .setDescription(`${emote.x} | Command timed out.`),
+                .setDescription(`${emote.x} | You ran out of time! Try again!`),
             ],
           });
         }
@@ -230,7 +233,7 @@ module.exports = {
                 ],
               })
             )
-            // ({ content: em.toString() + " added!" }))
+            
             .catch((error) => {
               if (error.code == 30008) {
                 return guild_choose_msg.edit({
@@ -238,7 +241,7 @@ module.exports = {
                     new EmbedBuilder()
                       .setColor(ee.color)
                       .setDescription(
-                        `${emote.x} | **Max Emoji slots reached.**`
+                        `${emote.x} | Maximum number of emojis reached!`
                       ),
                   ],
                   components: [

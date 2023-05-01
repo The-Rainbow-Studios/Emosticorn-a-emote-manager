@@ -77,7 +77,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | Only png is accepted`),
+              .setDescription(`${emote.x} | only PNG images are allowed!`),
           ],
         });
       }
@@ -95,7 +95,7 @@ module.exports = {
               embeds: [
                 new EmbedBuilder()
                   .setColor(ee.color)
-                  .setDescription(`${emote.x} | **Max Emoji slots reached.**`),
+                  .setDescription(`${emote.x} | Maxiumum Stickers reached!`),
               ],
             });
           }

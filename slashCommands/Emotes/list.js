@@ -4,6 +4,7 @@ const {
   ButtonBuilder,
   ActionRowBuilder,
   ButtonStyle,
+  formatEmoji
 } = require("discord.js");
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
@@ -45,10 +46,11 @@ module.exports = {
       interaction.guild.emojis.cache.forEach((x) => emojis.push(x));
       if (emojis.size === 0)
         return interaction.reply({
-          content: "There are no emojis in this server",
+          content: "There are no emojis in this server!",
         });
 
-      emojis = emojis.map((e, i) => `${i + 1}. ${e} \`\\${e}\``);
+      emojis = emojis.map((e, i) => `${i + 1}. ${e} - ${formatEmoji("1102580059379875881", false)}\`${e}\` 
+      ${formatEmoji("1102541952114765941", false)}${formatEmoji("1102579375834149045", false)}\`${e.guild.name}\``);
       for (var i = 0; i < emojis.length; i += 10) {
         const items = emojis.slice(i, i + 10);
         list.push(items.join("\n"));

@@ -4,11 +4,13 @@ const {
   ButtonBuilder,
   ActionRowBuilder,
   ButtonStyle,
+  formatEmoji
 } = require("discord.js");
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
 const settings = require("../../botconfig/settings.js");
 const btn = require("../../botconfig/components.js");
+const { format } = require("../../handlers/functions.js");
 module.exports = {
   name: "list_global", //the command name for the Slash Command
   category: "Emotes",
@@ -45,11 +47,12 @@ module.exports = {
       client.emojis.cache.forEach((x) => emojis.push(x));
       if (emojis.size === 0)
         return interaction.reply({
-          content: "There are no emojis in this server",
+          content: "There are no emojis in bot's cache!",
         });
 
       emojis = emojis.map(
-        (e, i) => `${i + 1}. ${e} - \`${e}\` - \`${e.guild.name}\``
+        (e, i) => `${i + 1}. ${e} - ${formatEmoji("1102580059379875881", false)}\`${e}\` 
+        ${formatEmoji("1102541952114765941", false)}${formatEmoji("1102579375834149045", false)}\`${e.guild.name}\``
       );
       for (var i = 0; i < emojis.length; i += 10) {
         const items = emojis.slice(i, i + 10);
@@ -111,7 +114,7 @@ module.exports = {
           r = await msg.awaitMessageComponent({
             filter,
             max: 1,
-            time: 20000,
+            time: 100000,
             errors: ["time"],
           });
         } catch (error) {

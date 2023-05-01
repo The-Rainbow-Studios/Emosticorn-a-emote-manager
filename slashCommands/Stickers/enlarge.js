@@ -6,6 +6,7 @@ const {
   ActionRowBuilder,
   StringSelectMenuBuilder,
   PermissionFlagsBits,
+  formatEmoji
 } = require("discord.js");
 const config = require("../../botconfig/config.js");
 const ee = require("../../botconfig/embed.js");
@@ -75,7 +76,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
               .setColor(ee.color)
-              .setDescription(`${emote.x} | Invalid Sticker`),
+              .setDescription(`${emote.x} | The sticker is not valid! Try again with a valid sticker!`),
           ],
         });
       const buttons = new ButtonBuilder()
@@ -88,11 +89,14 @@ module.exports = {
         embeds: [
           new EmbedBuilder()
             .setColor(ee.color)
-            .setDescription(
-              `Stickers enlarged ${emo.name}
-                      [sticker link](https://cdn.discordapp.com/stickers/${emo.id}.png)`
-            )
-            .setImage(`https://cdn.discordapp.com/stickers/${emo.id}.png`),
+            .setDescription(`${formatEmoji('1102541481845215248', false)} Sticker name: \`${emo.name}\`
+            ${formatEmoji('1102533953874833529', false)} Sticker Image Link: [Click here](https://cdn.discordapp.com/stickers/${emo.id}.png)
+            ${formatEmoji('1102541952114765941', false)} Sticker ID: \`${emo.id}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker description: \`${emo.description ? emo.description : `No Description`}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker guild: \`${emo.guild}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker tags: \`${emo.tags ? emo.tags : `No Tags`}\`
+            ${formatEmoji('1102541952114765941', false)} Sticker Preview:`)
+            .setImage(`https://cdn.discordapp.com/stickers/${emo.id}.png`)
         ],
 
         components: [
@@ -123,6 +127,8 @@ module.exports = {
         });
       } catch (error) {
         return msg.edit({
+          content: 
+            `${emote.x} | You ran out of time! Try again!`,
           components: [
             new ActionRowBuilder().addComponents(
               new ButtonBuilder()
@@ -167,12 +173,12 @@ module.exports = {
         ).filter((option) => option !== undefined);
         const guild_choose_msg = await r.reply({
           ephemeral: true,
-          content: `Select guild you want to add this sticker`,
+          content: `**${emote.loading} | Choose the server you want to add this sticker to**`,
           components: [
             new ActionRowBuilder().addComponents(
               new StringSelectMenuBuilder()
                 .setCustomId("guilds_select")
-                .setPlaceholder("Choose the guild you want to add this")
+                .setPlaceholder("Click me to select a server")
                 .setMinValues(1)
                 .setMaxValues(1)
                 .addOptions(options)
@@ -201,8 +207,9 @@ module.exports = {
             embeds: [
               new EmbedBuilder()
                 .setColor(ee.color)
-                .setDescription(`${emote.x} | Command timed out.`),
+                .setDescription(`${emote.x} | You didn't choose a server in time! Try again!`),
             ],
+            components: [new ActionRowBuilder().addComponents(btn.support, btn.invite, btn.github)],
           });
         }
 
@@ -219,12 +226,11 @@ module.exports = {
                 embeds: [
                   new EmbedBuilder()
                     .setColor(ee.color)
-                    .setDescription(`${emote.tick} | ${st.name} + " added!`)
+                    .setDescription(`${emote.tick} | ${st.name} + " was added!`)
                     .setImage(
                       `https://cdn.discordapp.com/stickers/${emo.id}.png`
                     ),
                 ],
-                //  content: st.name + " added!"
               })
             )
             .catch((error) => {
@@ -234,7 +240,7 @@ module.exports = {
                     new EmbedBuilder()
                       .setColor(ee.color)
                       .setDescription(
-                        `${emote.x} | **Max Emoji slots reached.**`
+                        `${emote.x} | Maximum number of stickers reached!`
                       ),
                   ],
                 });
