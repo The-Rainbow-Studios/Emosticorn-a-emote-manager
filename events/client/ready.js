@@ -2,7 +2,6 @@
 const config = require("../../botconfig/config.js");
 const {ActivityType} = require("discord.js")
 module.exports = async (client) => {
-  try {
     try {
       const stringlength = 69;
       console.log("\n");
@@ -46,19 +45,6 @@ module.exports = async (client) => {
     } catch {
       /* */
     }
-    try {
-      client.user.setActivity(
-        `/help | ${client.guilds.cache.size} Guilds | ${Math.ceil(
-          client.users.cache.size / 1000
-        )}k Members`,
-        {
-          type: "PLAYING",
-        }
-      );
-    } catch (e) {
-      console.log(String(e.stack).bgRed);
-    }
-    //loop through the status per each 10 minutes
       try {
               const activities = [
   "Organizing all the emotes and stickers...not sure if I should file them under 'cute' or 'epic'",
@@ -109,12 +95,12 @@ module.exports = async (client) => {
     setInterval(
       () =>
          client.user.setActivity(
-          activities: activities[i++ % activities.length],
+          activities[i++ % activities.length],
           {
             type: type[i++ % type.length],
           }
         ),
-      5000
+      10000
     );
           
 
