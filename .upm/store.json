@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "languages": {
+    "nodejs-npm": {
+      "specfileHash": "a3b9db8c99d0d808094b2b6aac49f897",
+      "lockfileHash": "ee391e6beb852d732eccb6b5eded5378",
+      "guessedImports": [
+        "discord.js",
+        "dotenv",
+        "colors",
+        "quick.db",
+        "quickmongo",
+        "mongoose",
+        "cpu-stat"
+      ],
+      "guessedImportsHash": "0662eb316319632d80288beb8fb9d646"
+    }
+  }
+}

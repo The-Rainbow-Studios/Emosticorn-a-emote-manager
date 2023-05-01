@@ -1,12 +1,10 @@
-const {
-  EmbedBuilder
-} = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const config = require("../../botconfig/config.js");
 var ee = require("../../botconfig/embed.js");
 const settings = require("../../botconfig/settings.js");
 module.exports = {
   name: "support", //the command name for execution & for helpcmd [OPTIONAL]
-  category: "Info",
+  category: "General",
   cooldown: 1, //the command cooldown for execution & for helpcmd [OPTIONAL]
   description: "Sends a Link of the Support Server", //the command description for helpcmd [OPTIONAL]
   memberpermissions: [], //Only allow members with specific Permissions to execute a Commmand [OPTIONAL]
@@ -26,18 +24,16 @@ module.exports = {
         ephemeral,
         options,
         id,
-        createdTimestamp
+        createdTimestamp,
       } = interaction;
-      const {
-        guild
-      } = member;
+      const { guild } = member;
       interaction.reply({
         ephemeral: true,
-        content: "https://discord.gg/rainbow-studios-free-codes-869916537610448897"
+        content:
+          "https://discord.gg/rainbow-studios-free-codes-869916537610448897",
       });
     } catch (e) {
-      console.log(String(e.stack).bgRed)
+      console.log(String(e.stack).bgRed);
     }
-  }
-}
-
+  },
+};
