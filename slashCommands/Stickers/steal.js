@@ -230,16 +230,15 @@ module.exports = {
       }
       const u = interaction.member;
       if (r.customId == "steal") {
-        const mutualGuilds = await Promise.all(client.guilds.cache.filter(async (guild) => {
-          await await guild.members.fetch();
+        const mutualGuilds = client.guilds.cache.filter((guild) => {
           return guild.members.cache.has(u.id);
-        }));
-
+        });
+    
         const options = (
           await Promise.all(
             mutualGuilds.map(async (guild) => {
               const member = await guild.members.fetch(interaction.member.id);
-
+              if(member) {
               if (
                 guild.members.me.permissions.has(
                   PermissionFlagsBits.ManageEmojisAndStickers
@@ -254,12 +253,13 @@ module.exports = {
                   value: String(guild.id),
                 };
               }
+            }
             })
           )
         ).filter((option) => option !== undefined);
         const guild_choose_msg = await r.reply({
           ephemeral: true,
-          content: `Choose the server you want to add this sticker to`,
+          content: `Choose the server you want to add this sticker to \n Don't see your server? Run any of my commands in that server to add it to my database!`,
           components: [
             new ActionRowBuilder().addComponents(
               new StringSelectMenuBuilder()
@@ -289,7 +289,7 @@ module.exports = {
             errors: ["time"],
           });
         } catch (error) {
-          return msg.editReply({
+          return msg.edit({
             embeds: [
               new EmbedBuilder()
                 .setColor(ee.color)
