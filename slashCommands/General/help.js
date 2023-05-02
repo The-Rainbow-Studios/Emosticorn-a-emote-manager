@@ -96,7 +96,7 @@ module.exports = {
           embed.setFooter({ text: "Syntax: <> = required, [] = optional" });
         }
         return interaction.reply({
-          ephemeral: true,
+          ephemeral: false,
           embeds: [embed.setColor(ee.color)],
         });
       } else {
@@ -196,7 +196,7 @@ module.exports = {
           console.log(String(e.stack).red);
         }
         interaction.reply({
-          ephemeral: true,
+          ephemeral: false,
           embeds: [embed],
         });
       }
