@@ -230,9 +230,10 @@ module.exports = {
       }
       const u = interaction.member;
       if (r.customId == "steal") {
-        const mutualGuilds = await client.guilds.cache.filter(async (guild) => {
+        const mutualGuilds = await Promise.all(client.guilds.cache.filter(async (guild) => {
+          await await guild.members.fetch();
           return guild.members.cache.has(u.id);
-        });
+        }));
 
         const options = (
           await Promise.all(
