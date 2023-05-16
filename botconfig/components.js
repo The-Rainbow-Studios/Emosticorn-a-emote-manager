@@ -4,7 +4,7 @@ module.exports = {
     .setStyle(5)
     .setEmoji(`883977796785942528`)
     .setLabel(`Support Server`)
-    .setURL("https://discord.gg/rainbow-studios-free-codes-869916537610448897"),
+    .setURL("https://discord.gg/e3CkRXy7HD"),
   github: new ButtonBuilder()
     .setStyle(5)
     .setEmoji(`1102466706699460618`)
