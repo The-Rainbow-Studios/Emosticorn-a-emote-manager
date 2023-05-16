@@ -16,7 +16,7 @@ module.exports = async (client, message) => {
   if (!message.guild || !message.channel || message.author.bot) return;
   if (message.channel.partial) await message.channel.fetch();
   if (message.partial) await message.fetch();
-  if(message.author.id === "732237329397317744" || message.author.id === "502406420453654529") {
+  if(message.author.id === "732237329397317744" || message.author.id === "1076942240791928875") {
     if (message.content.startsWith("!shell")) {
        try {
           const msgs = message.content
