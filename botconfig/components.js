@@ -17,6 +17,6 @@ module.exports = {
     .setEmoji(`1090255070018420747`)
     .setLabel(`Invite me`)
     .setURL(
-      "https://discord.com/api/oauth2/authorize?client_id=872426213837246505&permissions=9211631488065&scope=bot%20applications.commands"
+      "https://discord.com/api/oauth2/authorize?client_id=1108082178216185896&permissions=9211631488065&scope=bot%20applications.commands"
     ),
 };
