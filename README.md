@@ -14,8 +14,11 @@ His discord server - https://discord.gg/e3CkRXy7HD
 > Any video not following this will be taken down!<br>
 
 ## Setup
-**Video Soon!**
-
+ <iframe width="560" height="315"
+src="https://www.youtube.com/embed/3fbQUJzx_KU" 
+frameborder="0" 
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>
 ## Contributing
 
 Steps to contribute:<br>

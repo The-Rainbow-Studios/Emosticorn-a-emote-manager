@@ -34,7 +34,7 @@ module.exports = {
             .setColor(ee.color)
             .setFooter({ text: ee.footertext, iconURL: ee.footericon })
             .setDescription(
-              `**WHEN YOU USE THE SOURCE CODE, __GIVE CREDITS__!** :heart:\n\n[Link to Source](https://github.com/The-Rainbow-Studios/Emosticorn-a-emote-manager)\n\n[Youtube Tutorial]()`
+              `**WHEN YOU USE THE SOURCE CODE, __GIVE CREDITS__!** :heart:\n\n[Link to Source](https://github.com/The-Rainbow-Studios/Emosticorn-a-emote-manager)\n\n[Youtube Tutorial](https://youtu.be/3fbQUJzx_KU)`
             ),
         ],
       });
