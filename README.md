@@ -1,4 +1,4 @@
-# Emosticorn
+# Emosticorn 🦄
 
 # Can't host your version?
 - No worries! We have a hosted version of this bot! [Click here to invite it!](https://discord.com/api/oauth2/authorize?client_id=1108082178216185896&permissions=9211631488065&scope=bot%20applications.commands)
